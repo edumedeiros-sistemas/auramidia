@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Mídia - Apresentação Comercial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto 20px;
+            background: white;
+            padding: 20mm;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            page-break-after: always;
+        }
+
+        .page:last-child {
+            page-break-after: avoid;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #6366f1;
+        }
+
+        .logo {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #6366f1;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #6366f1;
+            margin-bottom: 15px;
+            border-left: 4px solid #6366f1;
+            padding-left: 15px;
+        }
+
+        .section-content {
+            margin-left: 20px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .highlight-box h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .service-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #6366f1;
+        }
+
+        .service-item h4 {
+            color: #6366f1;
+            margin-bottom: 8px;
+        }
+
+        .packages-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .packages-table th,
+        .packages-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .packages-table th {
+            background: #6366f1;
+            color: white;
+            font-weight: bold;
+        }
+
+        .packages-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .price {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #6366f1;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .feature-list li:before {
+            content: "✓ ";
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #6366f1;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .contact-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .contact-item strong {
+            width: 100px;
+            color: #6366f1;
+        }
+
+        .cta-section {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .cta-section p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #6366f1;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #6366f1;
+            color: #666;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .page {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+            
+            .page:last-child {
+                page-break-after: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Página 1: Capa -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">
+                <img src="logo.svg" alt="Aura Mídia" style="height: 60px; width: auto; margin-bottom: 10px;">
+            </div>
+            <div class="subtitle">Sua marca com mais presença</div>
+        </div>
+
+        <div class="highlight-box">
+            <h3>Transforme Sua Presença Digital em Resultados Reais</h3>
+            <p>Especialistas em fotografia, edição e estratégias de mídias digitais para Instagram e outras plataformas. Impulsione seu negócio com conteúdo profissional e estratégias comprovadas.</p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Sobre Nós</h2>
+            <div class="section-content">
+                <p>Na Aura Mídia, acreditamos que toda marca tem uma energia única — a sua aura.</p>
+                <p>Nosso propósito é transformar essa essência em presença digital, criando conteúdos que conectam pessoas, fortalecem marcas e geram resultados reais.</p>
+                <p>Trabalhamos com estratégia, criatividade e proximidade, oferecendo soluções em mídias sociais que vão além de posts: construímos relacionamentos, histórias e experiências que brilham no digital.</p>
+                <p>Seja você uma pequena empresa ou uma marca em expansão, estamos aqui para dar voz, identidade e impacto à sua presença online.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Por que escolher a Aura Mídia?</h2>
+            <div class="section-content">
+                <ul class="feature-list">
+                    <li>Energia jovem e inovadora no mercado digital</li>
+                    <li>Equipe especializada em fotografia e design</li>
+                    <li>Estratégias personalizadas para cada cliente</li>
+                    <li>Resultados mensuráveis e relatórios detalhados</li>
+                    <li>Suporte completo e atendimento personalizado</li>
+                    <li>Foco total em crescimento e performance</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página 2: Serviços -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">Nossos Serviços</div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">O que fazemos por você</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <h4>📸 Fotografia de Produtos</h4>
+                    <p>Fotos profissionais que destacam seus produtos e aumentam as vendas. Iluminação perfeita, ângulos estratégicos e composição que converte.</p>
+                </div>
+                <div class="service-item">
+                    <h4>🎨 Edição Profissional</h4>
+                    <p>Tratamento de imagens com técnicas avançadas para máximo impacto visual. Cores vibrantes, ajustes precisos e qualidade profissional.</p>
+                </div>
+                <div class="service-item">
+                    <h4>📱 Gerenciamento Instagram</h4>
+                    <p>Estratégias completas para crescimento orgânico e engajamento. Planejamento de conteúdo, hashtags otimizadas e interação com seguidores.</p>
+                </div>
+                <div class="service-item">
+                    <h4>📊 Análise de Performance</h4>
+                    <p>Relatórios detalhados e insights para otimizar sua presença digital. Métricas importantes e recomendações estratégicas.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Processo de Trabalho</h2>
+            <div class="section-content">
+                <ol style="margin-left: 20px; line-height: 2;">
+                    <li><strong>Análise e Planejamento:</strong> Estudamos seu negócio e definimos a estratégia ideal</li>
+                    <li><strong>Produção de Conteúdo:</strong> Fotografamos e editamos o material com qualidade profissional</li>
+                    <li><strong>Publicação e Monitoramento:</strong> Postamos no horário ideal e acompanhamos o desempenho</li>
+                    <li><strong>Relatórios e Otimização:</strong> Apresentamos resultados e ajustamos a estratégia</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <h3>Resultados Comprovados</h3>
+            <p>Nossos clientes já experimentaram aumentos significativos em vendas, engajamento e alcance orgânico. Trabalhamos com dados reais para garantir o sucesso do seu projeto.</p>
+        </div>
+    </div>
+
+    <!-- Página 3: Pacotes e Preços -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">Pacotes e Investimento</div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Escolha o plano ideal para seu negócio</h2>
+            
+            <table class="packages-table">
+                <thead>
+                    <tr>
+                        <th>Recursos</th>
+                        <th>Básico</th>
+                        <th>Profissional</th>
+                        <th>Premium</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Posts por mês</strong></td>
+                        <td>8 posts</td>
+                        <td>15 posts</td>
+                        <td>25 posts</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stories por semana</strong></td>
+                        <td>4 dias</td>
+                        <td>7 dias</td>
+                        <td>7 dias</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sessões de fotos</strong></td>
+                        <td>1 sessão</td>
+                        <td>2 sessões</td>
+                        <td>4 sessões</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Edição</strong></td>
+                        <td>Profissional</td>
+                        <td>Profissional</td>
+                        <td>Profissional</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Administração 100% das mídias</strong></td>
+                        <td>❌</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Estratégia de conteúdo</strong></td>
+                        <td>❌</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Relatórios</strong></td>
+                        <td>❌</td>
+                        <td>Mensal</td>
+                        <td>Semanal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Suporte</strong></td>
+                        <td>24/7</td>
+                        <td>24/7</td>
+                        <td>24/7</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Campanhas pagas</strong></td>
+                        <td>❌</td>
+                        <td>❌</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Investimento mensal</strong></td>
+                        <td class="price">R$ 299</td>
+                        <td class="price">R$ 599</td>
+                        <td class="price">R$ 999</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Benefícios Inclusos em Todos os Planos</h2>
+            <div class="section-content">
+                <ul class="feature-list">
+                    <li>Fotografia profissional de produtos</li>
+                    <li>Edição profissional de imagens</li>
+                    <li>Hashtags otimizadas para alcance</li>
+                    <li>Horários de postagem estratégicos</li>
+                    <li>Legendas criativas e envolventes</li>
+                    <li>Suporte 24/7 especializado</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <h3>💰 Garantia de Satisfação</h3>
+            <p>Oferecemos 30 dias de garantia. Se não ficar satisfeito com nossos serviços, devolvemos seu dinheiro sem questionamentos.</p>
+        </div>
+    </div>
+
+    <!-- Página 4: Portfólio e Cases -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">Cases de Sucesso</div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Resultados que falam por si</h2>
+            
+            <div class="service-item" style="margin-bottom: 20px;">
+                <h4>👤 Kerowlen Sanches</h4>
+                <p><strong>Instagram:</strong> <a href="https://www.instagram.com/kerowlensanches/" target="_blank">@kerowlensanches</a></p>
+                <p><strong>Serviços:</strong> Fotografia profissional + Gerenciamento completo do Instagram</p>
+                <p><strong>Resultado:</strong> Crescimento orgânico e engajamento consistente</p>
+            </div>
+
+            <div class="service-item" style="margin-bottom: 20px;">
+                <h4>🏪 Mercearia Padaria Popular</h4>
+                <p><strong>Instagram:</strong> <a href="https://www.instagram.com/merceariapadaria_popular/" target="_blank">@merceariapadaria_popular</a></p>
+                <p><strong>Serviços:</strong> Fotografia de produtos + Gerenciamento completo do Instagram</p>
+                <p><strong>Resultado:</strong> Aumento de visibilidade e vendas locais</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Depoimentos de Clientes</h2>
+            <div class="section-content">
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 10px 0; border-left: 4px solid #6366f1;">
+                    <p><em>"A Aura Mídia transformou completamente nossa presença no Instagram. O trabalho de fotografia e gerenciamento é excepcional. Recomendo para qualquer negócio!"</em></p>
+                    <p><strong>- Cliente Satisfeito</strong></p>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 10px 0; border-left: 4px solid #6366f1;">
+                    <p><em>"Profissionais dedicados e resultados incríveis. Nossa visibilidade aumentou significativamente desde que começamos a trabalhar com eles."</em></p>
+                    <p><strong>- Cliente Satisfeito</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página 5: Contato e Próximos Passos -->
+    <div class="page">
+        <div class="header">
+            <div class="logo">Vamos Começar?</div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Pronto para transformar sua presença digital?</h2>
+            <p>Entre em contato conosco e descubra como podemos impulsionar seu negócio nas redes sociais.</p>
+            <a href="mailto:contato@digitalmediapro.com" class="cta-button">Fale Conosco Agora</a>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Informações de Contato</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <strong>Email:</strong> contato@rmmidiassociais.com
+                </div>
+                <div class="contact-item">
+                    <strong>WhatsApp:</strong> (43) 98847-7636
+                </div>
+                <div class="contact-item">
+                    <strong>Instagram:</strong> @rmmidiassociais
+                </div>
+                <div class="contact-item">
+                    <strong>Localização:</strong> Sertanópolis, PR
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Próximos Passos</h2>
+            <div class="section-content">
+                <ol style="margin-left: 20px; line-height: 2;">
+                    <li><strong>Reunião inicial:</strong> Conversamos sobre seus objetivos e necessidades</li>
+                    <li><strong>Proposta personalizada:</strong> Criamos um plano específico para seu negócio</li>
+                    <li><strong>Início do projeto:</strong> Começamos a trabalhar imediatamente</li>
+                    <li><strong>Acompanhamento:</strong> Relatórios regulares e ajustes estratégicos</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <h3>🎯 Oferta Especial de Lançamento</h3>
+            <p><strong>20% de desconto no primeiro mês</strong> para novos clientes que contratarem até o final do mês. Aproveite esta oportunidade única!</p>
+        </div>
+
+        <div class="footer">
+            <p><strong>Aura Mídia</strong> - Sua marca com mais presença</p>
+            <p>www.auramidia.com | contato@auramidia.com | (43) 98847-7636</p>
+        </div>
+    </div>
+
+    <script>
+        // Função para imprimir/salvar como PDF
+        function printPDF() {
+            window.print();
+        }
+
+        // Adicionar botão de impressão se não estiver em modo de impressão
+        if (!window.matchMedia('print').matches) {
+            const printBtn = document.createElement('button');
+            printBtn.innerHTML = '🖨️ Imprimir/Salvar PDF';
+            printBtn.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #6366f1;
+                color: white;
+                border: none;
+                padding: 15px 20px;
+                border-radius: 25px;
+                cursor: pointer;
+                font-size: 16px;
+                box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+                z-index: 1000;
+            `;
+            printBtn.onclick = printPDF;
+            document.body.appendChild(printBtn);
+        }
+    </script>
+</body>
+</html>
