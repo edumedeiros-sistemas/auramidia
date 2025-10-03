@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Cliente - Aura Mídia Admin</title>
+    <link rel="icon" type="image/svg+xml" href="../logo-favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/cliente.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../logo-compact.svg" alt="Aura Mídia">
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="clientes.html" class="nav-item active">
+                <i class="fas fa-users"></i>
+                <span>Clientes</span>
+            </a>
+            <a href="posts.html" class="nav-item">
+                <i class="fas fa-image"></i>
+                <span>Postagens</span>
+            </a>
+            <a href="agendamentos.html" class="nav-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Agendamentos</span>
+            </a>
+            <a href="estatisticas.html" class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Estatísticas</span>
+            </a>
+            <a href="configuracoes.html" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Configurações</span>
+            </a>
+        </nav>
+
+        <div class="user-info">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="user-details">
+                <p class="user-name" id="userName">Medeiros</p>
+                <p class="user-role">Administrador</p>
+            </div>
+            <button class="btn-logout" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div>
+                <a href="clientes.html" class="btn-back">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </a>
+                <h1 id="clientName">Carregando...</h1>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content">
+            <!-- Client Header -->
+            <div class="client-profile-header">
+                <div class="profile-left">
+                    <img id="clientAvatar" src="https://via.placeholder.com/100" alt="Cliente" class="profile-avatar">
+                    <div class="profile-info">
+                        <h2 id="profileName">Nome do Cliente</h2>
+                        <p id="profileInstagram">@instagram</p>
+                        <div class="profile-badges">
+                            <span class="badge badge-connected" id="connectionStatus">
+                                <i class="fas fa-unlink"></i> Não Conectado
+                            </span>
+                            <span class="badge badge-active">
+                                <i class="fas fa-check-circle"></i> Ativo
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button class="btn-primary" onclick="connectInstagram()">
+                        <i class="fab fa-instagram"></i> Conectar Instagram
+                    </button>
+                    <button class="btn-secondary" onclick="refreshData()">
+                        <i class="fas fa-sync-alt"></i> Atualizar Dados
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-overview">
+                <div class="stat-box">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="followersCount">0</h3>
+                        <p>Seguidores</p>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="followingCount">0</h3>
+                        <p>Seguindo</p>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="mediaCount">0</h3>
+                        <p>Posts</p>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #ec4899, #db2777);">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="engagementRate">0%</h3>
+                        <p>Taxa de Engajamento</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('posts')">
+                    <i class="fas fa-image"></i> Posts
+                </button>
+                <button class="tab-btn" onclick="switchTab('agendamentos')">
+                    <i class="fas fa-calendar"></i> Agendamentos
+                </button>
+                <button class="tab-btn" onclick="switchTab('estatisticas')">
+                    <i class="fas fa-chart-line"></i> Estatísticas
+                </button>
+                <button class="tab-btn" onclick="switchTab('configuracoes')">
+                    <i class="fas fa-cog"></i> Configurações
+                </button>
+            </div>
+
+            <!-- Tab Content -->
+            <div id="postsTab" class="tab-content active">
+                <div class="section-header">
+                    <h2>Posts Recentes</h2>
+                    <button class="btn-primary" onclick="createPost()">
+                        <i class="fas fa-plus"></i> Criar Post
+                    </button>
+                </div>
+                <div id="postsGrid" class="posts-grid">
+                    <div class="empty-state">
+                        <i class="fas fa-image"></i>
+                        <p>Nenhum post ainda</p>
+                        <button class="btn-primary" onclick="createPost()">Criar Primeiro Post</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="agendamentosTab" class="tab-content">
+                <div class="section-header">
+                    <h2>Agendamentos</h2>
+                    <button class="btn-primary" onclick="schedulePost()">
+                        <i class="fas fa-calendar-plus"></i> Agendar Post
+                    </button>
+                </div>
+                <div id="scheduledList" class="scheduled-list">
+                    <div class="empty-state">
+                        <i class="fas fa-calendar"></i>
+                        <p>Nenhum agendamento</p>
+                        <button class="btn-primary" onclick="schedulePost()">Agendar Post</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="estatisticasTab" class="tab-content">
+                <div class="section-header">
+                    <h2>Estatísticas Detalhadas</h2>
+                    <select id="periodSelect" onchange="updateStats()">
+                        <option value="7">Últimos 7 dias</option>
+                        <option value="30" selected>Últimos 30 dias</option>
+                        <option value="90">Últimos 90 dias</option>
+                    </select>
+                </div>
+                <div class="stats-charts">
+                    <div class="chart-box">
+                        <h3>Alcance e Impressões</h3>
+                        <canvas id="reachChart"></canvas>
+                    </div>
+                    <div class="chart-box">
+                        <h3>Engajamento</h3>
+                        <canvas id="engagementChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div id="configuracoesTab" class="tab-content">
+                <div class="section-header">
+                    <h2>Configurações do Cliente</h2>
+                </div>
+                <div class="config-form">
+                    <div class="form-section">
+                        <h3>Informações Básicas</h3>
+                        <div class="form-group">
+                            <label>Nome do Cliente</label>
+                            <input type="text" id="configName" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label>Instagram</label>
+                            <input type="text" id="configInstagram" class="form-input">
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Conexão Instagram</h3>
+                        <div class="connection-status-box">
+                            <p id="connectionInfo">Status: Não conectado</p>
+                            <button class="btn-primary" onclick="connectInstagram()">
+                                <i class="fab fa-instagram"></i> Conectar Conta
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Preferências</h3>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="autoPublish"> 
+                                Publicação automática de agendamentos
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="notifications"> 
+                                Receber notificações
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn-primary" onclick="saveConfig()">
+                            <i class="fas fa-save"></i> Salvar Alterações
+                        </button>
+                        <button class="btn-danger" onclick="deleteClientConfirm()">
+                            <i class="fas fa-trash"></i> Excluir Cliente
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+    <script src="js/instagram-api.js"></script>
+    <script src="js/cliente.js"></script>
+</body>
+</html>

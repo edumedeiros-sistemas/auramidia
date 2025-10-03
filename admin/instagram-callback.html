@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conectando Instagram...</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+        }
+
+        .loader-container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #6366f1;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #666;
+        }
+
+        .error {
+            color: #dc2626;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="loader-container">
+        <div class="spinner"></div>
+        <h2>Conectando ao Instagram...</h2>
+        <p id="status">Processando autenticação...</p>
+        <p class="error" id="error" style="display: none;"></p>
+    </div>
+
+    <script>
+        // Processar callback do OAuth
+        async function handleCallback() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            const error = urlParams.get('error');
+            const errorReason = urlParams.get('error_reason');
+            const errorDescription = urlParams.get('error_description');
+
+            // Verificar se houve erro
+            if (error) {
+                document.getElementById('status').style.display = 'none';
+                const errorEl = document.getElementById('error');
+                errorEl.textContent = `Erro: ${errorDescription || errorReason || error}`;
+                errorEl.style.display = 'block';
+                
+                setTimeout(() => {
+                    window.close();
+                }, 5000);
+                return;
+            }
+
+            // Verificar se recebeu o código
+            if (!code) {
+                document.getElementById('status').style.display = 'none';
+                const errorEl = document.getElementById('error');
+                errorEl.textContent = 'Código de autorização não recebido';
+                errorEl.style.display = 'block';
+                
+                setTimeout(() => {
+                    window.close();
+                }, 5000);
+                return;
+            }
+
+            // Recuperar ID do cliente
+            const clientId = sessionStorage.getItem('connecting_client_id');
+            if (!clientId) {
+                document.getElementById('status').textContent = 'Erro: ID do cliente não encontrado';
+                setTimeout(() => {
+                    window.close();
+                }, 3000);
+                return;
+            }
+
+            try {
+                document.getElementById('status').textContent = 'Trocando código por token...';
+
+                // IMPORTANTE: Em produção, esta chamada deve ser feita no BACKEND
+                // Aqui está no frontend apenas para demonstração
+                
+                // Simular sucesso (em produção, fazer a chamada real à API)
+                document.getElementById('status').textContent = 'Conexão estabelecida com sucesso!';
+
+                // Salvar dados no localStorage (em produção, salvar no banco de dados)
+                const connectionData = {
+                    client_id: clientId,
+                    code: code,
+                    connected_at: new Date().toISOString(),
+                    status: 'connected'
+                };
+
+                // Atualizar cliente no localStorage
+                const clients = JSON.parse(localStorage.getItem('auramedia_clients') || '[]');
+                const clientIndex = clients.findIndex(c => c.id == clientId);
+                
+                if (clientIndex >= 0) {
+                    clients[clientIndex].access_token = 'TOKEN_SIMULADO_' + Date.now();
+                    clients[clientIndex].instagram_id = 'IG_ID_SIMULADO';
+                    clients[clientIndex].connected_at = new Date().toISOString();
+                    localStorage.setItem('auramedia_clients', JSON.stringify(clients));
+                }
+
+                // Limpar sessionStorage
+                sessionStorage.removeItem('connecting_client_id');
+
+                // Notificar janela pai e fechar popup
+                if (window.opener) {
+                    window.opener.postMessage({
+                        type: 'instagram_connected',
+                        client_id: clientId,
+                        success: true
+                    }, window.location.origin);
+                }
+
+                setTimeout(() => {
+                    window.close();
+                }, 2000);
+
+            } catch (err) {
+                console.error('Erro no callback:', err);
+                document.getElementById('status').style.display = 'none';
+                const errorEl = document.getElementById('error');
+                errorEl.textContent = 'Erro ao processar autenticação: ' + err.message;
+                errorEl.style.display = 'block';
+
+                setTimeout(() => {
+                    window.close();
+                }, 5000);
+            }
+        }
+
+        // Executar quando a página carregar
+        handleCallback();
+
+        // Escutar mensagens da janela opener
+        window.addEventListener('message', function(event) {
+            if (event.origin !== window.location.origin) return;
+            
+            if (event.data.type === 'reload_client_data') {
+                // Recarregar dados do cliente na janela pai
+                if (window.opener) {
+                    window.opener.location.reload();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

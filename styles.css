@@ -75,6 +75,19 @@ body {
     color: #6366f1;
 }
 
+.btn-login {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+}
+
 .hamburger {
     display: none;
     flex-direction: column;

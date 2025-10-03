@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Aura Mídia Admin</title>
+    <link rel="icon" type="image/svg+xml" href="../logo-favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <img src="../logo-compact.svg" alt="Aura Mídia">
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="dashboard.html" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="clientes.html" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Clientes</span>
+            </a>
+            <a href="posts.html" class="nav-item">
+                <i class="fas fa-image"></i>
+                <span>Postagens</span>
+            </a>
+            <a href="agendamentos.html" class="nav-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Agendamentos</span>
+            </a>
+            <a href="estatisticas.html" class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Estatísticas</span>
+            </a>
+            <a href="configuracoes.html" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Configurações</span>
+            </a>
+        </nav>
+
+        <div class="user-info">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="user-details">
+                <p class="user-name" id="userName">Medeiros</p>
+                <p class="user-role">Administrador</p>
+            </div>
+            <button class="btn-logout" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <h1>Dashboard</h1>
+            <div class="top-bar-actions">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Buscar...">
+                </div>
+                <button class="btn-notification">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content">
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalClientes">2</h3>
+                        <p>Clientes Ativos</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalPosts">0</h3>
+                        <p>Posts este Mês</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalAgendamentos">0</h3>
+                        <p>Agendamentos</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #ec4899, #db2777);">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalEngajamento">0</h3>
+                        <p>Engajamento</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="section-header">
+                <h2>Ações Rápidas</h2>
+            </div>
+            
+            <div class="quick-actions">
+                <a href="clientes.html?action=add" class="action-card">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Adicionar Cliente</span>
+                </a>
+                <a href="posts.html?action=create" class="action-card">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Criar Post</span>
+                </a>
+                <a href="agendamentos.html?action=schedule" class="action-card">
+                    <i class="fas fa-calendar-plus"></i>
+                    <span>Agendar Publicação</span>
+                </a>
+                <a href="estatisticas.html" class="action-card">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Ver Estatísticas</span>
+                </a>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="section-header">
+                <h2>Clientes</h2>
+                <a href="clientes.html" class="btn-link">Ver todos</a>
+            </div>
+
+            <div class="clients-grid" id="clientsGrid">
+                <div class="client-card" onclick="window.location.href='cliente.html?id=1'">
+                    <div class="client-header">
+                        <img src="https://via.placeholder.com/50" alt="Cliente" class="client-avatar">
+                        <div class="client-info">
+                            <h3>Kerowlen Sanches</h3>
+                            <p>@kerowlensanches</p>
+                        </div>
+                    </div>
+                    <div class="client-stats">
+                        <div class="client-stat">
+                            <i class="fas fa-image"></i>
+                            <span>0 posts</span>
+                        </div>
+                        <div class="client-stat">
+                            <i class="fas fa-heart"></i>
+                            <span>0 likes</span>
+                        </div>
+                    </div>
+                    <button class="btn-manage">
+                        <i class="fas fa-cog"></i> Gerenciar
+                    </button>
+                </div>
+
+                <div class="client-card" onclick="window.location.href='cliente.html?id=2'">
+                    <div class="client-header">
+                        <img src="https://via.placeholder.com/50" alt="Cliente" class="client-avatar">
+                        <div class="client-info">
+                            <h3>Mercearia Padaria Popular</h3>
+                            <p>@merceariapadaria_popular</p>
+                        </div>
+                    </div>
+                    <div class="client-stats">
+                        <div class="client-stat">
+                            <i class="fas fa-image"></i>
+                            <span>0 posts</span>
+                        </div>
+                        <div class="client-stat">
+                            <i class="fas fa-heart"></i>
+                            <span>0 likes</span>
+                        </div>
+                    </div>
+                    <button class="btn-manage">
+                        <i class="fas fa-cog"></i> Gerenciar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

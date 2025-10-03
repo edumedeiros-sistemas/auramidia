@@ -24,6 +24,7 @@
                     <li><a href="#portfolio">Portfólio</a></li>
                     <li><a href="#about">Sobre</a></li>
                     <li><a href="#contact">Contato</a></li>
+                    <li><a href="login.html" class="btn-login"><i class="fas fa-user"></i> Login</a></li>
                 </ul>
                 <div class="hamburger">
                     <span></span>
@@ -247,18 +248,22 @@
                         </div>
                     </div>
                 </div>
-                <form class="contact-form">
+                <form class="contact-form" name="contato" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                    <input type="hidden" name="form-name" value="contato">
+                    <p style="display: none;">
+                        <label>Don't fill this out: <input name="bot-field" /></label>
+                    </p>
                     <div class="form-group">
-                        <input type="text" placeholder="Seu nome" required>
+                        <input type="text" name="nome" placeholder="Seu nome" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" placeholder="Seu email" required>
+                        <input type="email" name="email" placeholder="Seu email" required>
                     </div>
                     <div class="form-group">
-                        <input type="tel" placeholder="Seu telefone">
+                        <input type="tel" name="telefone" placeholder="Seu telefone">
                     </div>
                     <div class="form-group">
-                        <select required>
+                        <select name="pacote" required>
                             <option value="">Selecione um pacote</option>
                             <option value="basico">Básico - R$ 299/mês</option>
                             <option value="profissional">Profissional - R$ 599/mês</option>
@@ -266,7 +271,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <textarea placeholder="Conte-nos sobre seu projeto" rows="5"></textarea>
+                        <textarea name="mensagem" placeholder="Conte-nos sobre seu projeto" rows="5"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
                 </form>
