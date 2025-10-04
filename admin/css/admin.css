@@ -26,13 +26,16 @@ body {
 }
 
 .sidebar .logo {
-    padding: 30px 20px;
+    padding: 25px 20px;
     text-align: center;
     border-bottom: 1px solid #e5e7eb;
 }
 
 .sidebar .logo img {
-    height: 40px;
+    height: 160px;
+    width: auto;
+    max-width: 600px;
+    object-fit: contain;
 }
 
 .nav-menu {

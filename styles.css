@@ -27,10 +27,11 @@ body {
     backdrop-filter: blur(10px);
     z-index: 1000;
     transition: all 0.3s ease;
+    height: 125px;
 }
 
 .navbar {
-    padding: 1rem 0;
+    padding: 0;
 }
 
 .nav-container {
@@ -38,8 +39,16 @@ body {
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    gap: 0.2rem;
+    min-height: 125px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .logo h2 {
@@ -49,19 +58,26 @@ body {
 }
 
 .logo-img {
-    height: 40px;
+    height: 170px;
     width: auto;
+    max-width: 600px;
     transition: transform 0.3s ease;
+    object-fit: contain;
+    margin: 0;
+    padding: 0;
+    transform: translateY(-25px);
 }
 
 .logo-img:hover {
-    transform: scale(1.05);
+    transform: translateY(-25px) scale(1.05);
 }
 
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem;
+    gap: 1.5rem;
+    align-items: center;
+    margin-left: 0.5rem;
 }
 
 .nav-menu a {

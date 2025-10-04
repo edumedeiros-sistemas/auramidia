@@ -338,11 +338,25 @@ async function connectInstagram() {
         // Salvar Facebook Page ID
         currentClient.facebook_page_id = facebookPageId;
         
+        // Verificar se a classe InstagramAPI existe
+        if (typeof InstagramAPI === 'undefined') {
+            console.error('InstagramAPI não encontrada');
+            alert('❌ Erro: InstagramAPI não carregada. Recarregue a página.');
+            return;
+        }
+        
         // Criar instância da API do Instagram para este cliente
         const instagramAPI = new InstagramAPI();
         
         // Gerar URL de autorização
         const authUrl = instagramAPI.getAuthUrl();
+        
+        if (!authUrl) {
+            alert('❌ Erro ao gerar URL de autorização. Verifique as configurações.');
+            return;
+        }
+        
+        console.log('URL de autorização:', authUrl);
         
         // Abrir popup de autorização
         const popup = window.open(
@@ -350,6 +364,11 @@ async function connectInstagram() {
             'instagram-auth',
             'width=600,height=600,scrollbars=yes,resizable=yes'
         );
+        
+        if (!popup) {
+            alert('❌ Popup bloqueado! Permita popups para este site.');
+            return;
+        }
         
         // Monitorar o popup
         const checkClosed = setInterval(() => {
@@ -362,7 +381,7 @@ async function connectInstagram() {
         
     } catch (error) {
         console.error('Erro ao conectar Instagram:', error);
-        alert('❌ Erro ao conectar Instagram. Tente novamente.');
+        alert('❌ Erro ao conectar Instagram: ' + error.message);
     }
 }
 
@@ -370,6 +389,13 @@ async function testConnection() {
     try {
         if (!currentClient.access_token) {
             alert('⚠️ Nenhum token de acesso encontrado. Conecte o Instagram primeiro.');
+            return;
+        }
+        
+        // Verificar se a classe InstagramAPI existe
+        if (typeof InstagramAPI === 'undefined') {
+            console.error('InstagramAPI não encontrada');
+            alert('❌ Erro: InstagramAPI não carregada. Recarregue a página.');
             return;
         }
         
