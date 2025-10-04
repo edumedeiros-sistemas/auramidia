@@ -5,9 +5,11 @@ document.addEventListener('DOMContentLoaded', function() {
     loadClientData();
 });
 
-function loadClientData() {
+async function loadClientData() {
     const urlParams = new URLSearchParams(window.location.search);
     const clientId = urlParams.get('id');
+    
+    console.log('Carregando cliente ID:', clientId);
     
     if (!clientId) {
         alert('Cliente não encontrado');
@@ -15,7 +17,8 @@ function loadClientData() {
         return;
     }
 
-    currentClient = dataManager.getClient(clientId);
+    currentClient = await csvManager.getClient(clientId);
+    console.log('Cliente carregado:', currentClient);
     
     if (!currentClient) {
         alert('Cliente não encontrado');
@@ -237,12 +240,32 @@ function loadConfig() {
     document.getElementById('configName').value = currentClient.name;
     document.getElementById('configInstagram').value = currentClient.instagram;
 
-    // Status de conexão
-    const connectionInfo = document.getElementById('connectionInfo');
-    if (currentClient.access_token) {
-        connectionInfo.textContent = 'Status: Conectado ao Instagram';
+    // Carregar configurações de API
+    document.getElementById('facebookPageId').value = currentClient.facebook_page_id || '';
+    document.getElementById('instagramBusinessId').value = currentClient.instagram_business_id || '';
+    document.getElementById('accessToken').value = currentClient.access_token || '';
+    
+    // Atualizar status de conexão
+    updateApiStatus();
+}
+
+function updateApiStatus() {
+    const apiStatus = document.getElementById('apiStatus');
+    const lastSync = document.getElementById('lastSync');
+    
+    if (currentClient.api_configured) {
+        apiStatus.textContent = 'Configurada';
+        apiStatus.style.color = '#10b981';
     } else {
-        connectionInfo.textContent = 'Status: Não conectado';
+        apiStatus.textContent = 'Não Configurada';
+        apiStatus.style.color = '#ef4444';
+    }
+    
+    if (currentClient.last_sync) {
+        const date = new Date(currentClient.last_sync);
+        lastSync.textContent = date.toLocaleString('pt-BR');
+    } else {
+        lastSync.textContent = 'Nunca';
     }
 }
 
@@ -300,4 +323,138 @@ async function refreshData() {
 function formatDateTime(dateString) {
     const date = new Date(dateString);
     return date.toLocaleString('pt-BR');
+}
+
+// Funções de API do Instagram por cliente
+async function connectInstagram() {
+    try {
+        // Verificar se tem Facebook Page ID
+        const facebookPageId = document.getElementById('facebookPageId').value;
+        if (!facebookPageId) {
+            alert('⚠️ Por favor, preencha o ID da Página do Facebook primeiro!');
+            return;
+        }
+        
+        // Salvar Facebook Page ID
+        currentClient.facebook_page_id = facebookPageId;
+        
+        // Criar instância da API do Instagram para este cliente
+        const instagramAPI = new InstagramAPI();
+        
+        // Gerar URL de autorização
+        const authUrl = instagramAPI.getAuthUrl();
+        
+        // Abrir popup de autorização
+        const popup = window.open(
+            authUrl,
+            'instagram-auth',
+            'width=600,height=600,scrollbars=yes,resizable=yes'
+        );
+        
+        // Monitorar o popup
+        const checkClosed = setInterval(() => {
+            if (popup.closed) {
+                clearInterval(checkClosed);
+                // Recarregar dados após autorização
+                loadClientData();
+            }
+        }, 1000);
+        
+    } catch (error) {
+        console.error('Erro ao conectar Instagram:', error);
+        alert('❌ Erro ao conectar Instagram. Tente novamente.');
+    }
+}
+
+async function testConnection() {
+    try {
+        if (!currentClient.access_token) {
+            alert('⚠️ Nenhum token de acesso encontrado. Conecte o Instagram primeiro.');
+            return;
+        }
+        
+        // Criar instância da API do Instagram para este cliente
+        const instagramAPI = new InstagramAPI();
+        instagramAPI.setAccessToken(currentClient.access_token);
+        
+        // Testar conexão
+        const profile = await instagramAPI.getProfile();
+        
+        if (profile) {
+            alert('✅ Conexão com Instagram funcionando!\n\n' +
+                  'Nome: ' + profile.name + '\n' +
+                  'Seguidores: ' + profile.followers_count + '\n' +
+                  'Seguindo: ' + profile.follows_count);
+            
+            // Atualizar dados do cliente
+            currentClient.instagram_business_id = profile.id;
+            currentClient.last_sync = new Date().toISOString();
+            currentClient.api_configured = true;
+            
+            // Salvar no CSV
+            await csvManager.updateClient(currentClient.id, currentClient);
+            
+            // Atualizar interface
+            updateApiStatus();
+            loadClientData();
+            
+        } else {
+            alert('❌ Falha na conexão. Verifique as configurações.');
+        }
+        
+    } catch (error) {
+        console.error('Erro ao testar conexão:', error);
+        alert('❌ Erro ao testar conexão: ' + error.message);
+    }
+}
+
+async function saveApiConfig() {
+    try {
+        // Coletar dados do formulário
+        const facebookPageId = document.getElementById('facebookPageId').value;
+        const instagramBusinessId = document.getElementById('instagramBusinessId').value;
+        const accessToken = document.getElementById('accessToken').value;
+        
+        // Validar dados obrigatórios
+        if (!facebookPageId) {
+            alert('⚠️ ID da Página do Facebook é obrigatório!');
+            return;
+        }
+        
+        // Atualizar cliente
+        currentClient.facebook_page_id = facebookPageId;
+        currentClient.instagram_business_id = instagramBusinessId;
+        currentClient.access_token = accessToken;
+        currentClient.api_configured = !!(facebookPageId && accessToken);
+        
+        // Salvar no CSV
+        const success = await csvManager.updateClient(currentClient.id, currentClient);
+        
+        if (success) {
+            showNotification('✅ Configurações salvas com sucesso!', 'success');
+            updateApiStatus();
+        } else {
+            showNotification('❌ Erro ao salvar configurações!', 'error');
+        }
+        
+    } catch (error) {
+        console.error('Erro ao salvar configurações:', error);
+        showNotification('❌ Erro ao salvar: ' + error.message, 'error');
+    }
+}
+
+function showApiHelp() {
+    alert('📖 Guia de Configuração da API:\n\n' +
+          '1. Crie uma Página do Facebook para o cliente\n' +
+          '2. Converta o Instagram para Business\n' +
+          '3. Vincule o Instagram à Página do Facebook\n' +
+          '4. Encontre o ID da página em: facebook.com/suapagina/about\n' +
+          '5. Clique em "Conectar Instagram" para autorizar\n' +
+          '6. Teste a conexão para verificar se está funcionando');
+}
+
+function showVideoTutorial() {
+    alert('🎥 Tutorial em Vídeo:\n\n' +
+          'Em breve disponível!\n' +
+          'Por enquanto, siga o guia de configuração.');
 }

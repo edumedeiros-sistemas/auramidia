@@ -171,7 +171,7 @@ Substitua os placeholders de imagem pelos seus trabalhos reais:
 ## 📞 Suporte
 
 Para dúvidas ou personalizações adicionais, entre em contato:
-- Email: contato@auramidia.com
+- Email: contato@auramidiadigital.com.br
 - WhatsApp: (43) 98847-7636
 
 ---

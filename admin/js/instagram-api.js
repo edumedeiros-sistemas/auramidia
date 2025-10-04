@@ -7,8 +7,8 @@ class InstagramAPI {
     constructor() {
         // IMPORTANTE: Estes valores devem ser configurados com suas próprias credenciais
         // Obtenha em: https://developers.facebook.com/apps/
-        this.APP_ID = 'SEU_APP_ID_AQUI'; // Substitua pelo seu App ID
-        this.APP_SECRET = 'SEU_APP_SECRET_AQUI'; // Substitua pelo seu App Secret
+        this.APP_ID = '1330625782180698'; // App ID do aura_midia_eduardo
+        this.APP_SECRET = '5629bb2ef8306f33ac65e16c6fc9c147'; // Chave Secreta do Aplicativo
         this.REDIRECT_URI = window.location.origin + '/admin/instagram-callback.html';
         this.API_VERSION = 'v18.0';
         this.BASE_URL = `https://graph.instagram.com/${this.API_VERSION}`;

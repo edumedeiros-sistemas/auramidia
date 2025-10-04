@@ -1,0 +1,4 @@
+id,name,instagram,email,phone,plan,status,created_at,profile_picture,instagram_id,access_token,facebook_page_id,instagram_business_id,api_configured,last_sync
+1,Eduardo Medeiros,@ensmedeiros,badcoto@gmail.com,(43) 98847-7636,Profissional,Ativo,2025-01-03T10:00:00.000Z,https://via.placeholder.com/70,,,,false,
+2,Kerowlen Sanches,@kerowlensanches,kerowlen@email.com,(43) 99999-9999,Básico,Ativo,2025-01-03T10:00:00.000Z,https://via.placeholder.com/70,,,,false,
+3,Mercearia Padaria Popular,@merceariapadaria_popular,mercearia@email.com,(43) 88888-8888,Premium,Ativo,2025-01-03T10:00:00.000Z,https://via.placeholder.com/70,,,,false,

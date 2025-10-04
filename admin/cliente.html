@@ -227,12 +227,62 @@
                     </div>
 
                     <div class="form-section">
-                        <h3>Conexão Instagram</h3>
-                        <div class="connection-status-box">
-                            <p id="connectionInfo">Status: Não conectado</p>
+                        <h3>🔗 Configuração da API do Instagram</h3>
+                        <div class="api-status">
+                            <div class="status-item">
+                                <span class="status-label">Status da API:</span>
+                                <span class="status-value" id="apiStatus">Não Configurada</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">Última Sincronização:</span>
+                                <span class="status-value" id="lastSync">Nunca</span>
+                            </div>
+                        </div>
+                        
+                        <div class="api-setup-guide">
+                            <h4>📋 Passo a Passo para Configurar:</h4>
+                            <ol>
+                                <li><strong>Criar Página do Facebook</strong> para o cliente</li>
+                                <li><strong>Converter Instagram para Business</strong> e vincular à página</li>
+                                <li><strong>Obter IDs necessários</strong> (será preenchido automaticamente)</li>
+                                <li><strong>Autorizar aplicativo</strong> (botão abaixo)</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="facebookPageId">ID da Página do Facebook</label>
+                            <input type="text" id="facebookPageId" placeholder="Ex: 123456789012345">
+                            <small>💡 Encontre em: facebook.com/suapagina/about</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="instagramBusinessId">ID do Instagram Business</label>
+                            <input type="text" id="instagramBusinessId" placeholder="Será preenchido automaticamente" readonly>
+                            <small>✅ Este ID será obtido após conectar</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="accessToken">Access Token</label>
+                            <input type="password" id="accessToken" placeholder="Será preenchido automaticamente" readonly>
+                            <small>🔐 Token será obtido após autorização</small>
+                        </div>
+                        
+                        <div class="form-actions">
                             <button class="btn-primary" onclick="connectInstagram()">
-                                <i class="fab fa-instagram"></i> Conectar Conta
+                                <i class="fab fa-instagram"></i> Conectar Instagram
                             </button>
+                            <button class="btn-secondary" onclick="testConnection()">
+                                <i class="fas fa-wifi"></i> Testar Conexão
+                            </button>
+                            <button class="btn-success" onclick="saveApiConfig()">
+                                <i class="fas fa-save"></i> Salvar Configuração
+                            </button>
+                        </div>
+                        
+                        <div class="api-help">
+                            <h4>❓ Precisa de Ajuda?</h4>
+                            <p>📖 <a href="#" onclick="showApiHelp()">Guia Completo de Configuração</a></p>
+                            <p>🎥 <a href="#" onclick="showVideoTutorial()">Tutorial em Vídeo</a></p>
                         </div>
                     </div>
 
@@ -266,6 +316,7 @@
     </div>
 
     <script src="js/admin.js"></script>
+    <script src="js/csv-manager.js"></script>
     <script src="js/instagram-api.js"></script>
     <script src="js/cliente.js"></script>
 </body>

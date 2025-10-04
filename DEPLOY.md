@@ -122,7 +122,7 @@ Se tiver problemas:
 
 ## ✨ **Seu Site:**
 **URL Temporária:** `https://seu-site.netlify.app`
-**URL Personalizada:** `https://auramidia.netlify.app` (após configurar)
+**URL Personalizada:** `https://auramidiadigital.com.br` (após configurar)
 
 ---
 

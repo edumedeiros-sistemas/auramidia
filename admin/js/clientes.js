@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     loadClients();
 });
 
-function loadClients() {
-    const clients = dataManager.getClients();
+async function loadClients() {
+    const clients = await csvManager.loadClients();
     const clientsList = document.getElementById('clientsList');
     
     if (clients.length === 0) {
@@ -25,9 +25,12 @@ function loadClients() {
                      class="client-avatar-large">
                 <div>
                     <h3>${client.name}</h3>
-                    <p style="color: #6b7280; margin: 5px 0;">${client.instagram}</p>
-                    <span class="status-badge ${client.active ? 'status-active' : 'status-inactive'}">
-                        ${client.active ? 'Ativo' : 'Inativo'}
+                    <p style="color: #6b7280; margin: 5px 0;">
+                        <i class="fab fa-instagram"></i> ${client.instagram}
+                    </p>
+                    ${client.plan ? `<p style="color: #8b5cf6; margin: 5px 0; font-weight: 500;">Plano: ${client.plan}</p>` : ''}
+                    <span class="status-badge ${client.status === 'Ativo' ? 'status-active' : 'status-inactive'}">
+                        ${client.status || 'Ativo'}
                     </span>
                 </div>
             </div>
@@ -46,30 +49,38 @@ function loadClients() {
     `).join('');
 }
 
-function addClient() {
+async function addClient() {
     const name = prompt('Nome do cliente:');
     if (!name) return;
     
     const instagram = prompt('Usuário do Instagram (ex: @usuario):');
     if (!instagram) return;
     
-    const client = {
+    const email = prompt('Email do cliente (opcional):') || '';
+    const phone = prompt('Telefone do cliente (opcional):') || '';
+    const plan = prompt('Plano (Básico/Profissional/Premium):') || 'Básico';
+    
+    const clientData = {
         name: name,
-        instagram: instagram.startsWith('@') ? instagram : '@' + instagram,
-        instagram_id: null,
-        access_token: null,
-        profile_picture: 'https://via.placeholder.com/70',
-        created_at: new Date().toISOString(),
-        active: true
+        instagram: instagram,
+        email: email,
+        phone: phone,
+        plan: plan,
+        profile_picture: 'https://via.placeholder.com/70'
     };
     
-    dataManager.saveClient(client);
-    showNotification('Cliente adicionado com sucesso!', 'success');
-    loadClients();
+    const newClient = await csvManager.addClient(clientData);
+    
+    if (newClient) {
+        showNotification('Cliente adicionado com sucesso!', 'success');
+        loadClients();
+    } else {
+        showNotification('Erro ao adicionar cliente!', 'error');
+    }
 }
 
-function editClient(id) {
-    const client = dataManager.getClient(id);
+async function editClient(id) {
+    const client = await csvManager.getClient(id);
     if (!client) return;
     
     const name = prompt('Nome do cliente:', client.name);
@@ -78,21 +89,40 @@ function editClient(id) {
     const instagram = prompt('Usuário do Instagram:', client.instagram);
     if (instagram === null) return;
     
-    client.name = name;
-    client.instagram = instagram.startsWith('@') ? instagram : '@' + instagram;
+    const email = prompt('Email do cliente:', client.email || '');
+    const phone = prompt('Telefone do cliente:', client.phone || '');
+    const plan = prompt('Plano:', client.plan || 'Básico');
     
-    dataManager.saveClient(client);
-    showNotification('Cliente atualizado com sucesso!', 'success');
-    loadClients();
+    const clientData = {
+        name: name,
+        instagram: instagram.startsWith('@') ? instagram : '@' + instagram,
+        email: email,
+        phone: phone,
+        plan: plan
+    };
+    
+    const success = await csvManager.updateClient(id, clientData);
+    
+    if (success) {
+        showNotification('Cliente atualizado com sucesso!', 'success');
+        loadClients();
+    } else {
+        showNotification('Erro ao atualizar cliente!', 'error');
+    }
 }
 
-function deleteClient(id) {
-    const client = dataManager.getClient(id);
+async function deleteClient(id) {
+    const client = await csvManager.getClient(id);
     if (!client) return;
     
     if (confirm(`Tem certeza que deseja excluir o cliente "${client.name}"?`)) {
-        dataManager.deleteClient(id);
-        showNotification('Cliente excluído com sucesso!', 'success');
-        loadClients();
+        const success = await csvManager.deleteClient(id);
+        
+        if (success) {
+            showNotification('Cliente excluído com sucesso!', 'success');
+            loadClients();
+        } else {
+            showNotification('Erro ao excluir cliente!', 'error');
+        }
     }
 }
