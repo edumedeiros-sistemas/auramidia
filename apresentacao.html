@@ -67,6 +67,69 @@
             margin-left: 20px;
         }
 
+        /* Founder Section */
+        .founder-section {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .founder-image {
+            flex-shrink: 0;
+        }
+
+        .founder-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #8b5cf6;
+        }
+
+        .founder-info {
+            flex: 1;
+        }
+
+        .founder-info h3 {
+            color: #1e293b;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .founder-title {
+            color: #8b5cf6;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .founder-info p {
+            color: #64748b;
+            line-height: 1.4;
+            margin-bottom: 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .company-mission {
+            background: #ffffff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 3px solid #8b5cf6;
+        }
+
+        .company-mission p {
+            color: #475569;
+            line-height: 1.5;
+            margin-bottom: 0.8rem;
+            font-size: 0.85rem;
+        }
+
         .highlight-box {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -265,10 +328,23 @@
         <div class="section">
             <h2 class="section-title">Sobre Nós</h2>
             <div class="section-content">
-                <p>Na Aura Mídia, acreditamos que toda marca tem uma energia única — a sua aura.</p>
-                <p>Nosso propósito é transformar essa essência em presença digital, criando conteúdos que conectam pessoas, fortalecem marcas e geram resultados reais.</p>
-                <p>Trabalhamos com estratégia, criatividade e proximidade, oferecendo soluções em mídias sociais que vão além de posts: construímos relacionamentos, histórias e experiências que brilham no digital.</p>
-                <p>Seja você uma pequena empresa ou uma marca em expansão, estamos aqui para dar voz, identidade e impacto à sua presença online.</p>
+                <div class="founder-section">
+                    <div class="founder-image">
+                        <img src="imagens/foto_rhu.jpg" alt="Rhuana Medeiros - Fundadora da Aura Mídia" class="founder-photo">
+                    </div>
+                    <div class="founder-info">
+                        <h3>Rhuana Medeiros</h3>
+                        <p class="founder-title">Fundadora e CEO da Aura Mídia</p>
+                        <p>Formada em Ciências Contábeis pela UNIL, Rhuana Medeiros tem 25 anos e é mãe de dois filhos. Sua paixão por números e estratégia se uniu à visão empreendedora para criar a Aura Mídia, uma agência que transforma a essência única de cada marca em presença digital impactante.</p>
+                        <p>Com experiência em gestão financeira e uma visão inovadora do mercado digital, Rhuana lidera nossa equipe com dedicação e proximidade, garantindo que cada cliente receba soluções personalizadas e resultados reais.</p>
+                    </div>
+                </div>
+                <div class="company-mission">
+                    <p>Na Aura Mídia, acreditamos que toda marca tem uma energia única — a sua aura.</p>
+                    <p>Nosso propósito é transformar essa essência em presença digital, criando conteúdos que conectam pessoas, fortalecem marcas e geram resultados reais.</p>
+                    <p>Trabalhamos com estratégia, criatividade e proximidade, oferecendo soluções em mídias sociais que vão além de posts: construímos relacionamentos, histórias e experiências que brilham no digital.</p>
+                    <p>Seja você uma pequena empresa ou uma marca em expansão, estamos aqui para dar voz, identidade e impacto à sua presença online.</p>
+                </div>
             </div>
         </div>
 
