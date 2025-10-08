@@ -310,6 +310,9 @@ body {
     transition: transform 0.3s ease;
     position: relative;
     border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .package-card:hover {
@@ -371,6 +374,7 @@ body {
 .package-features {
     list-style: none;
     margin-bottom: 2rem;
+    flex-grow: 1;
 }
 
 .package-features li {
@@ -383,6 +387,12 @@ body {
 .package-features i {
     color: #10b981;
     font-size: 1.2rem;
+}
+
+.package-card .btn {
+    margin-top: auto;
+    width: 100%;
+    text-align: center;
 }
 
 /* Portfolio Section */
