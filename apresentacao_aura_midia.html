@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação Comercial - Aura Mídia</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto 20px;
+            background: white;
+            padding: 20mm;
+            page-break-after: always;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .page:last-child {
+            page-break-after: auto;
+        }
+        
+        /* Cover Page */
+        .cover {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            text-align: center;
+            padding: 60px 40px;
+            min-height: 257mm;
+        }
+        
+        .cover-logo {
+            width: 200px;
+            height: auto;
+            margin-bottom: 30px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .cover h1 {
+            font-size: 4.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .cover .tagline {
+            font-size: 2em;
+            font-weight: 300;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+        
+        .cover .subtitle {
+            font-size: 1.3em;
+            font-weight: 400;
+            margin-top: 60px;
+            opacity: 0.9;
+        }
+        
+        /* Section Styles */
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 2.5em;
+            color: #6366f1;
+            margin-bottom: 30px;
+            font-weight: 700;
+            border-bottom: 3px solid #6366f1;
+            padding-bottom: 10px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.8em;
+            color: #8b5cf6;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+        }
+        
+        .stat-number {
+            font-size: 4em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1.2em;
+            font-weight: 400;
+            opacity: 0.95;
+        }
+        
+        /* Benefits List */
+        .benefits-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .benefits-list li {
+            padding: 20px;
+            margin-bottom: 15px;
+            background: #f8f9ff;
+            border-left: 5px solid #6366f1;
+            border-radius: 8px;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+        }
+        
+        .benefits-list li i {
+            color: #6366f1;
+            font-size: 1.5em;
+            margin-right: 15px;
+        }
+        
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 30px 0;
+        }
+        
+        .text-content {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #555;
+        }
+        
+        .text-content p {
+            margin-bottom: 20px;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .highlight-box h3 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        
+        .highlight-box p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .service-item {
+            background: #f8f9ff;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #6366f1;
+        }
+        
+        .service-item h4 {
+            color: #6366f1;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        
+        .service-item p {
+            color: #666;
+            font-size: 1em;
+        }
+        
+        /* Packages Table */
+        .packages-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .packages-table th {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .packages-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .packages-table tr:nth-child(even) {
+            background: #f8f9ff;
+        }
+        
+        .packages-table .price-cell {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #6366f1;
+        }
+        
+        /* Contact Info */
+        .contact-info {
+            background: #f8f9ff;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .contact-info h3 {
+            color: #6366f1;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        
+        .contact-item {
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        
+        .contact-item i {
+            color: #6366f1;
+            margin-right: 10px;
+        }
+        
+        /* Print Styles */
+        @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            body {
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            
+            .page {
+                width: 210mm !important;
+                min-height: 297mm !important;
+                max-height: 297mm !important;
+                margin: 0 !important;
+                padding: 20mm !important;
+                box-shadow: none !important;
+                page-break-after: always !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                overflow: hidden !important;
+            }
+            
+            .page:last-child {
+                page-break-after: auto !important;
+            }
+
+            /* Cover Page */
+            .cover {
+                min-height: 257mm !important;
+                max-height: 257mm !important;
+                padding: 40mm 30mm !important;
+                background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+            }
+
+            .cover-logo {
+                width: 180px !important;
+                height: auto !important;
+                margin-bottom: 25px !important;
+            }
+
+            .cover h1 {
+                font-size: 3.5em !important;
+                margin-bottom: 15px !important;
+            }
+
+            .cover .tagline {
+                font-size: 1.8em !important;
+                margin-bottom: 30px !important;
+            }
+
+            .cover .subtitle {
+                font-size: 1.2em !important;
+                margin-top: 40px !important;
+            }
+
+            /* Sections */
+            .section {
+                margin-bottom: 30px !important;
+                page-break-inside: avoid !important;
+            }
+
+            .section-title {
+                font-size: 2em !important;
+                margin-bottom: 20px !important;
+                page-break-after: avoid !important;
+                padding-bottom: 8px !important;
+            }
+
+            .section-subtitle {
+                font-size: 1.5em !important;
+                margin-bottom: 15px !important;
+                page-break-after: avoid !important;
+            }
+
+            /* Stats Grid */
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 20px !important;
+                margin: 20px 0 !important;
+                page-break-inside: avoid !important;
+            }
+
+            .stat-card {
+                padding: 20px !important;
+                border-radius: 10px !important;
+                box-shadow: 0 3px 10px rgba(99, 102, 241, 0.2) !important;
+            }
+
+            .stat-number {
+                font-size: 3em !important;
+                margin-bottom: 8px !important;
+            }
+
+            .stat-label {
+                font-size: 1em !important;
+            }
+
+            /* Benefits List */
+            .benefits-list li {
+                padding: 15px !important;
+                margin-bottom: 12px !important;
+                font-size: 1em !important;
+                page-break-inside: avoid !important;
+            }
+
+            .benefits-list li i {
+                font-size: 1.3em !important;
+                margin-right: 12px !important;
+            }
+
+            /* Two Column */
+            .two-column {
+                gap: 30px !important;
+                margin: 20px 0 !important;
+                page-break-inside: avoid !important;
+            }
+
+            .text-content {
+                font-size: 1em !important;
+                line-height: 1.7 !important;
+            }
+
+            .text-content p {
+                margin-bottom: 15px !important;
+            }
+
+            /* Highlight Box */
+            .highlight-box {
+                padding: 25px !important;
+                border-radius: 10px !important;
+                margin: 25px 0 !important;
+                page-break-inside: avoid !important;
+            }
+
+            .highlight-box h3 {
+                font-size: 1.6em !important;
+                margin-bottom: 12px !important;
+            }
+
+            .highlight-box p {
+                font-size: 1.1em !important;
+            }
+
+            /* Services Grid */
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 20px !important;
+                margin: 25px 0 !important;
+                page-break-inside: avoid !important;
+            }
+
+            .service-item {
+                padding: 20px !important;
+                border-radius: 8px !important;
+            }
+
+            .service-item h4 {
+                font-size: 1.2em !important;
+                margin-bottom: 8px !important;
+            }
+
+            .service-item p {
+                font-size: 0.95em !important;
+            }
+
+            /* Table */
+            .packages-table {
+                margin: 25px 0 !important;
+                page-break-inside: avoid !important;
+                font-size: 0.9em !important;
+            }
+
+            .packages-table th {
+                padding: 12px !important;
+                font-size: 1em !important;
+            }
+
+            .packages-table td {
+                padding: 12px !important;
+                font-size: 0.95em !important;
+            }
+
+            .packages-table .price-cell {
+                font-size: 1.2em !important;
+            }
+
+            /* Contact Info */
+            .contact-info {
+                padding: 25px !important;
+                border-radius: 10px !important;
+                margin: 25px 0 !important;
+                page-break-inside: avoid !important;
+            }
+
+            .contact-info h3 {
+                font-size: 1.6em !important;
+                margin-bottom: 15px !important;
+            }
+
+            .contact-item {
+                margin: 12px 0 !important;
+                font-size: 1em !important;
+            }
+
+            /* Images */
+            img {
+                max-width: 100% !important;
+                height: auto !important;
+                page-break-inside: avoid !important;
+            }
+
+            /* Avoid breaks */
+            h1, h2, h3, h4, h5, h6 {
+                page-break-after: avoid !important;
+            }
+
+            ul, ol {
+                page-break-inside: avoid !important;
+            }
+
+            /* Team profile */
+            .team-profile {
+                page-break-inside: avoid !important;
+                margin-bottom: 20px !important;
+            }
+
+            .team-profile img {
+                width: 120px !important;
+                height: 120px !important;
+            }
+        }
+        
+        /* Responsive adjustments for screen */
+        @media screen {
+            body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cover Page -->
+    <div class="page cover">
+        <img src="imagens/logo_auramidia.png" alt="Aura Mídia" class="cover-logo">
+        <h1>Aura Mídia</h1>
+        <p class="tagline">Sua marca com mais presença</p>
+        <p class="subtitle">Apresentação Comercial</p>
+    </div>
+    
+    <!-- Page 2: Sobre a Aura Mídia -->
+    <div class="page">
+        <div class="section">
+            <h2 class="section-title">Sobre a Aura Mídia</h2>
+            <div class="text-content">
+                <p>Na <strong>Aura Mídia</strong>, acreditamos que toda marca tem uma energia única — a sua aura. Nosso propósito é transformar essa essência em presença digital, criando conteúdos que conectam pessoas, fortalecem marcas e geram resultados reais.</p>
+                
+                <p>Trabalhamos com estratégia, criatividade e proximidade, oferecendo soluções em mídias sociais que vão além de posts: construímos relacionamentos, histórias e experiências que brilham no digital.</p>
+                
+                <p>Seja você uma empresa em crescimento ou uma marca estabelecida, estamos aqui para dar voz, identidade e impacto à sua presença online.</p>
+            </div>
+            
+            <div class="highlight-box">
+                <h3>Nossa Missão</h3>
+                <p>Transformar a essência única de cada marca em presença digital impactante, gerando conexões reais e resultados mensuráveis.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page 3: Por que contratar um Social Media? -->
+    <div class="page">
+        <div class="section">
+            <h2 class="section-title">Por Que Contratar um Social Media?</h2>
+            
+            <div class="text-content">
+                <p>No mundo digital de hoje, ter presença nas redes sociais não é mais opcional — é essencial. <strong>Para o seu negócio</strong>, isso pode ser a diferença entre crescer ou ficar para trás da concorrência.</p>
+                
+                <p>Mas apenas estar presente não é suficiente. É preciso ter uma estratégia, criar conteúdo de qualidade e manter consistência para alcançar resultados reais. Em uma cidade com 16 mil habitantes, sua loja pode se tornar a <strong>primeira opção</strong> dos clientes com a gestão profissional certa.</p>
+            </div>
+            
+            <h3 class="section-subtitle">O Que Acontece SEM Gestão Profissional:</h3>
+            <ul class="benefits-list">
+                <li><i class="fas fa-times-circle"></i> <strong>Perda de oportunidades locais:</strong> 89% dos consumidores pesquisam nas redes sociais antes de comprar - se sua loja não está bem, eles vão para o concorrente</li>
+                <li><i class="fas fa-times-circle"></i> <strong>Conteúdo inconsistente:</strong> Reduz a credibilidade na comunidade e afasta potenciais clientes da cidade</li>
+                <li><i class="fas fa-times-circle"></i> <strong>Falta de estratégia:</strong> Sem direcionamento claro, os resultados são limitados e o investimento não retorna</li>
+                <li><i class="fas fa-times-circle"></i> <strong>Tempo investido sem retorno:</strong> Gestão amadora não gera resultados mensuráveis e você perde tempo precioso do seu negócio</li>
+                <li><i class="fas fa-times-circle"></i> <strong>Concorrência ganha vantagem:</strong> Enquanto você não investe, outros negócios locais podem estar se destacando digitalmente</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Page 4: Resultados e Benefícios em Números -->
+    <div class="page">
+        <div class="section">
+            <h2 class="section-title">Resultados Comprovados</h2>
+            <p style="font-size: 1.2em; color: #666; margin-bottom: 30px; text-align: center;">Estudos comprovam que negócios que investem em gestão profissional de redes sociais alcançam resultados reais e mensuráveis:</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">40%</div>
+                    <div class="stat-label">Aumento de Vendas<br><small style="font-size: 0.7em; opacity: 0.9;">90% dos negócios aumentam vendas</small></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Aumento no Reconhecimento<br><small style="font-size: 0.7em; opacity: 0.9;">da Marca</small></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">180%</div>
+                    <div class="stat-label">Aumento de Engajamento<br><small style="font-size: 0.7em; opacity: 0.9;">e interação com clientes</small></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">73%</div>
+                    <div class="stat-label">Aumento de Tráfego<br><small style="font-size: 0.7em; opacity: 0.9;">e alcance local</small></div>
+                </div>
+            </div>
+            
+            <div class="highlight-box" style="margin-top: 40px;">
+                <h3>Dados Comprovados</h3>
+                <p style="margin-top: 15px; font-size: 1.1em;"><strong>90%</strong> dos empreendedores aumentam vendas com a ajuda das redes sociais</p>
+                <p style="margin-top: 10px; font-size: 1.1em;"><strong>75%</strong> das empresas utilizam redes sociais para atrair vendas</p>
+                <p style="margin-top: 10px; font-size: 1.1em;">Em mercados locais, a concorrência digital ainda é limitada, aumentando suas chances de se destacar!</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page 5: Benefícios Específicos -->
+    <div class="page">
+        <div class="section">
+            <h2 class="section-title">Benefícios Para Sua Loja</h2>
+            <p style="font-size: 1.1em; color: #666; margin-bottom: 25px;">Especialmente em mercados locais, como o seu, com cerca de 16 mil habitantes, a gestão profissional de redes sociais traz vantagens competitivas importantes:</p>
+            
+            <ul class="benefits-list">
+                <li><i class="fas fa-check-circle"></i> <strong>Aumento de Vendas em até 40%:</strong> Estratégias direcionadas para o público local convertem seguidores em clientes reais na sua região</li>
+                <li><i class="fas fa-check-circle"></i> <strong>Marca Mais Reconhecida (95% de aumento):</strong> Presença consistente faz sua loja ser lembrada primeiro pelos clientes</li>
+                <li><i class="fas fa-check-circle"></i> <strong>Vantagem Competitiva:</strong> 81% dos negócios usam WhatsApp e 60% preferem Instagram - estar presente te coloca à frente da concorrência</li>
+                <li><i class="fas fa-check-circle"></i> <strong>Alcance Local Estratégico:</strong> Atinge todo o seu público-alvo na cidade sem desperdiçar recursos em anúncios amplos demais</li>
+                <li><i class="fas fa-check-circle"></i> <strong>Economia de Tempo:</strong> Você ganha 15-20 horas por semana para focar no atendimento e gestão do seu negócio</li>
+                <li><i class="fas fa-check-circle"></i> <strong>Profissionalização da Imagem:</strong> Conteúdo de alta qualidade eleva a percepção da sua loja na comunidade</li>
+                <li><i class="fas fa-check-circle"></i> <strong>Custo-Benefício:</strong> Marketing digital é mais acessível que mídia tradicional e permite melhor controle do investimento</li>
+                <li><i class="fas fa-check-circle"></i> <strong>Fidelização de Clientes:</strong> Comunicação direta via Instagram e WhatsApp fortalece o relacionamento com clientes locais</li>
+                <li><i class="fas fa-check-circle"></i> <strong>Indicações Boca a Boca Digital:</strong> Conteúdo compartilhável aumenta recomendações na sua cidade</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Page 6: Por Que Funciona em Mercados Locais -->
+    <div class="page">
+        <div class="section">
+            <h2 class="section-title">Por Que Funciona Ainda Mais em Mercados Locais?</h2>
+            
+            <div class="text-content" style="margin-bottom: 30px;">
+                <p>Em cidades com características locais específicas, como a sua com cerca de <strong>16 mil habitantes</strong>, a gestão profissional de redes sociais traz vantagens únicas que grandes centros não oferecem:</p>
+            </div>
+            
+            <div class="two-column">
+                <div>
+                    <h3 class="section-subtitle">Vantagens Competitivas</h3>
+                    <div class="text-content">
+                        <p><strong>Menos Concorrência Digital:</strong> A maioria dos concorrentes ainda não investe em gestão profissional, te dando uma vantagem clara no mercado local.</p>
+                        
+                        <p><strong>Alcance Focado:</strong> Você atinge exatamente seu público-alvo (sua cidade) sem desperdiçar investimento em anúncios muito amplos.</p>
+                        
+                        <p><strong>Reconhecimento Rápido (95% de aumento):</strong> Em comunidades conectadas, presença digital consistente faz sua loja ser lembrada primeiro.</p>
+                        
+                        <p><strong>Comunidade Conectada:</strong> O "boca a boca" funciona muito bem - quando um cliente compartilha, vários outros veem.</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="section-subtitle">Resultados Reais</h3>
+                    <div class="text-content">
+                        <p><strong>Aumento de Vendas (40%):</strong> Estratégias direcionadas ao público local convertem mais porque você conhece as necessidades da comunidade.</p>
+                        
+                        <p><strong>Fidelização:</strong> Relacionamento próximo com clientes via Instagram e WhatsApp cria laços fortes na sua comunidade.</p>
+                        
+                        <p><strong>Credibilidade Local:</strong> Perfil profissional mostra que sua loja é séria e investe em qualidade - isso gera confiança na comunidade.</p>
+                        
+                        <p><strong>Custo-Benefício Superior:</strong> Com menos concorrência digital, cada real investido tem mais impacto do que em grandes centros.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="highlight-box" style="margin-top: 40px;">
+                <h3>Vantagem Especial em Mercados Locais</h3>
+                <p><strong>81% dos negócios usam WhatsApp</strong> e <strong>60% preferem Instagram</strong> para promover produtos. Quando sua loja está bem posicionada nessas plataformas com gestão profissional, você se destaca da concorrência local que ainda não investiu nisso.</p>
+                <p style="margin-top: 15px; font-size: 1.1em;"><strong>Resultado:</strong> Sua loja vira a primeira opção na mente dos seus clientes!</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page 7: Nossos Serviços -->
+    <div class="page">
+        <div class="section">
+            <h2 class="section-title">Nossos Serviços</h2>
+            
+            <div class="services-grid">
+                <div class="service-item">
+                    <h4><i class="fas fa-camera"></i> Fotografia de Produtos</h4>
+                    <p>Fotos profissionais que destacam seus produtos e aumentam o interesse dos clientes locais</p>
+                </div>
+                
+                <div class="service-item">
+                    <h4><i class="fas fa-edit"></i> Edição Profissional</h4>
+                    <p>Tratamento de imagens com técnicas avançadas para máximo impacto visual e credibilidade</p>
+                </div>
+                
+                <div class="service-item">
+                    <h4><i class="fab fa-instagram"></i> Gerenciamento Instagram</h4>
+                    <p>Estratégias completas para crescimento orgânico e engajamento com o público local - até 180% de aumento</p>
+                </div>
+                
+                <div class="service-item">
+                    <h4><i class="fas fa-chart-line"></i> Análise de Performance</h4>
+                    <p>Relatórios detalhados e insights para otimizar continuamente sua presença digital na cidade</p>
+                </div>
+                
+                <div class="service-item">
+                    <h4><i class="fas fa-hashtag"></i> Hashtags Otimizadas</h4>
+                    <p>Pesquisa e aplicação de hashtags estratégicas locais para aumentar alcance na sua região</p>
+                </div>
+                
+                <div class="service-item">
+                    <h4><i class="fas fa-lightbulb"></i> Estratégia de Conteúdo</h4>
+                    <p>Planejamento estratégico personalizado para sua loja e público-alvo local</p>
+                </div>
+                
+                <div class="service-item">
+                    <h4><i class="fas fa-globe"></i> Criação de Site Profissional</h4>
+                    <p>Sites modernos, responsivos e otimizados que aumentam sua credibilidade e atraem novos clientes na sua região</p>
+                </div>
+                
+                <div class="service-item">
+                    <h4><i class="fas fa-music"></i> Criação de Jingle para Propaganda</h4>
+                    <p>Jingles exclusivos e memoráveis que fortalecem a identidade da sua marca e aumentam o reconhecimento local</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page 8: Por Que Escolher a Aura Mídia? -->
+    <div class="page">
+        <div class="section">
+            <h2 class="section-title">Por Que Escolher a Aura Mídia?</h2>
+            
+            <div class="text-content">
+                <p>Na <strong>Aura Mídia</strong>, não apenas gerenciamos suas redes sociais — construímos relacionamentos, criamos histórias e transformamos sua presença digital em resultados reais e mensuráveis.</p>
+            </div>
+            
+            <div class="highlight-box" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white; padding: 40px; border-radius: 15px; margin: 40px 0;">
+                <h3 style="color: white; font-size: 2.2em; margin-bottom: 30px;">Nossos 5 Grandes Diferenciais</h3>
+                
+                <div style="display: grid; gap: 25px; margin-top: 30px;">
+                    <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
+                        <h4 style="color: white; font-size: 1.4em; margin-bottom: 10px; display: flex; align-items: center;">
+                            <i class="fas fa-handshake" style="margin-right: 15px; font-size: 1.2em;"></i>
+                            1. Conhecemos o Mercado Local
+                        </h4>
+                        <p style="color: rgba(255,255,255,0.95); font-size: 1.1em; line-height: 1.7;">
+                            Trabalhamos com negócios locais e entendemos as particularidades do seu mercado. Sabemos como falar com seu público, quais os melhores horários para postar e como criar conteúdo que realmente ressoa com a comunidade da sua cidade.
+                        </p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
+                        <h4 style="color: white; font-size: 1.4em; margin-bottom: 10px; display: flex; align-items: center;">
+                            <i class="fas fa-users" style="margin-right: 15px; font-size: 1.2em;"></i>
+                            2. Atendimento Pessoal e Próximo
+                        </h4>
+                        <p style="color: rgba(255,255,255,0.95); font-size: 1.1em; line-height: 1.7;">
+                            Você não é apenas mais um número para nós. Nossa equipe te conhece, entende seu negócio e está sempre disponível para conversar. Respostas rápidas via WhatsApp, reuniões quando necessário e um relacionamento de confiança são pilares do nosso trabalho.
+                        </p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
+                        <h4 style="color: white; font-size: 1.4em; margin-bottom: 10px; display: flex; align-items: center;">
+                            <i class="fas fa-chart-line" style="margin-right: 15px; font-size: 1.2em;"></i>
+                            3. Transparência Total nos Resultados
+                        </h4>
+                        <p style="color: rgba(255,255,255,0.95); font-size: 1.1em; line-height: 1.7;">
+                            Você sabe exatamente o que está acontecendo com sua conta. Relatórios claros e objetivos, acesso aos números reais de alcance e engajamento, e explicações sobre cada estratégia aplicada. Sem promessas vazias, apenas resultados reais e mensuráveis.
+                        </p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
+                        <h4 style="color: white; font-size: 1.4em; margin-bottom: 10px; display: flex; align-items: center;">
+                            <i class="fas fa-dollar-sign" style="margin-right: 15px; font-size: 1.2em;"></i>
+                            4. Investimento Justo e Acessível
+                        </h4>
+                        <p style="color: rgba(255,255,255,0.95); font-size: 1.1em; line-height: 1.7;">
+                            Nossos planos foram pensados para oferecer o melhor custo-benefício. Preços acessíveis que cabem no seu orçamento, sem contratos de fidelidade forçados e com flexibilidade para ajustar conforme seu negócio cresce. Você investe apenas o que faz sentido para o seu momento.
+                        </p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
+                        <h4 style="color: white; font-size: 1.4em; margin-bottom: 10px; display: flex; align-items: center;">
+                            <i class="fas fa-rocket" style="margin-right: 15px; font-size: 1.2em;"></i>
+                            5. Começamos a Agir Imediatamente
+                        </h4>
+                        <p style="color: rgba(255,255,255,0.95); font-size: 1.1em; line-height: 1.7;">
+                            Não precisa esperar semanas ou meses para ver resultados. Assim que iniciamos, já começamos a otimizar seu perfil, criar conteúdo estratégico e aplicar técnicas que vão fazer diferença rapidamente. Primeiros resultados visíveis já no primeiro mês.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page 9: Planos e Investimento -->
+    <div class="page">
+        <div class="section">
+            <h2 class="section-title">Planos e Investimento</h2>
+            <p style="font-size: 1.2em; color: #666; margin-bottom: 30px; text-align: center;">Escolha o plano ideal para transformar a presença digital da sua marca:</p>
+            
+            <table class="packages-table">
+                <thead>
+                    <tr>
+                        <th>Recursos</th>
+                        <th>Básico</th>
+                        <th>Profissional</th>
+                        <th>Premium</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Posts por mês</strong></td>
+                        <td>8 posts</td>
+                        <td>15 posts</td>
+                        <td>25 posts</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Stories por semana</strong></td>
+                        <td>4 dias</td>
+                        <td>7 dias</td>
+                        <td>7 dias</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sessões de fotos</strong></td>
+                        <td>1 sessão</td>
+                        <td>2 sessões</td>
+                        <td>4 sessões</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Edição profissional</strong></td>
+                        <td>✅</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Administração 100% das mídias</strong></td>
+                        <td>❌</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Site profissional</strong></td>
+                        <td>❌</td>
+                        <td>✅</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Jingle exclusivo</strong></td>
+                        <td>❌</td>
+                        <td>❌</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Estratégia de conteúdo</strong></td>
+                        <td>Básica</td>
+                        <td>Completa</td>
+                        <td>Completa + Avançada</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Relatórios</strong></td>
+                        <td>Mensal</td>
+                        <td>Mensal</td>
+                        <td>Semanal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Suporte</strong></td>
+                        <td>24/7</td>
+                        <td>24/7</td>
+                        <td>24/7</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Campanhas pagas</strong></td>
+                        <td>❌</td>
+                        <td>❌</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Investimento Mensal</strong></td>
+                        <td class="price-cell">R$ 149,90</td>
+                        <td class="price-cell">R$ 299,90</td>
+                        <td class="price-cell">R$ 499,90</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Page 10: Próximos Passos -->
+    <div class="page">
+        <div class="section">
+            <div class="contact-info">
+                <h3>Próximos Passos</h3>
+                <p style="margin-bottom: 30px; font-size: 1.2em;">Estamos prontos para transformar a presença digital da sua marca!</p>
+                
+                <div class="contact-item">
+                    <i class="fab fa-instagram"></i>
+                    <strong>Instagram:</strong> @auramidia
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <strong>WhatsApp:</strong> Entre em contato e agende uma conversa
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <strong>Email:</strong> contato@auramidia.com.br
+                </div>
+                
+                <div style="margin-top: 40px; padding: 20px; background: rgba(255,255,255,0.2); border-radius: 10px;">
+                    <h3 style="color: #6366f1; margin-bottom: 15px;">Vamos Começar Hoje?</h3>
+                    <p style="font-size: 1.1em; color: #666;">Agende uma conversa gratuita e descubra como podemos transformar a presença digital da sua marca em resultados reais!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>
+

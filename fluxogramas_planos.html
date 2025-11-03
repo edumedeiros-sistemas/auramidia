@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluxogramas de Trabalho por Plano - Aura Mídia Digital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 30px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 50px;
+        }
+
+        .plan-section {
+            background: white;
+            margin-bottom: 60px;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            page-break-inside: avoid;
+        }
+
+        .plan-title {
+            text-align: center;
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+        }
+
+        .plan-title.basic {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .plan-title.professional {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .plan-title.premium {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 30px 0;
+            position: relative;
+        }
+
+        /* Formas do fluxograma */
+        .shape {
+            min-width: 250px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            font-weight: 500;
+            border: 2px solid #333;
+            z-index: 2;
+            margin: 5px 0;
+        }
+
+        .shape.rectangle {
+            background: #e3f2fd;
+            border-radius: 5px;
+        }
+
+        .shape.diamond {
+            background: #fff3e0;
+            transform: rotate(45deg);
+            width: 180px;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+
+        .shape.diamond .content {
+            transform: rotate(-45deg);
+            font-size: 0.9em;
+        }
+
+        .shape.oval {
+            background: #f3e5f5;
+            border-radius: 50px;
+            padding: 15px 30px;
+        }
+
+        .shape.parallelogram {
+            background: #e8f5e9;
+            transform: skew(-20deg);
+            padding: 20px 30px;
+        }
+
+        .shape.parallelogram .content {
+            transform: skew(20deg);
+        }
+
+        .arrow {
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 20px solid #333;
+            margin: 8px 0;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .arrow.horizontal {
+            width: 60px;
+            height: 2px;
+            background: #333;
+            border: none;
+            position: relative;
+            margin: 0 15px;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .arrow.horizontal::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-left: 6px solid #333;
+            border-top: 3px solid transparent;
+            border-bottom: 3px solid transparent;
+            z-index: 2;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 10px 0;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .branch {
+            display: flex;
+            gap: 60px;
+            margin: 25px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .branch-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .yes {
+            color: #4caf50;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .no {
+            color: #f44336;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .process-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .process-details {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .phase-label {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 30px 0 15px 0;
+            text-align: center;
+        }
+
+        .deliverables {
+            background: #fff9c4;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 30px;
+            border-radius: 5px;
+        }
+
+        .deliverables h3 {
+            color: #f57c00;
+            margin-bottom: 10px;
+        }
+
+        .deliverables ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .deliverables li {
+            padding: 5px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .deliverables li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .print-instructions {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .print-instructions h3 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .print-instructions ul {
+            list-style: none;
+            padding: 0;
+            color: #856404;
+        }
+
+        .print-instructions li {
+            margin: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .print-instructions li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #856404;
+            font-weight: bold;
+        }
+
+        @media print {
+            .print-instructions {
+                display: none !important;
+                visibility: hidden !important;
+                height: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: hidden !important;
+            }
+            @page {
+                size: A4;
+                margin: 1cm;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            body {
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                overflow: visible !important;
+            }
+
+            .container {
+                max-width: 100% !important;
+                width: 100% !important;
+                padding: 10px !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+            }
+
+            h1 {
+                font-size: 1.8em !important;
+                page-break-after: avoid !important;
+                page-break-before: always !important;
+                margin-bottom: 15px !important;
+                margin-top: 0 !important;
+                padding: 0 !important;
+            }
+
+            .subtitle {
+                page-break-after: avoid !important;
+                margin-bottom: 20px !important;
+                font-size: 0.95em !important;
+            }
+
+            .plan-section {
+                page-break-before: always !important;
+                page-break-after: always !important;
+                page-break-inside: avoid !important;
+                padding: 15px !important;
+                margin: 0 !important;
+                margin-bottom: 0 !important;
+                box-shadow: none !important;
+                border: 1px solid #ddd !important;
+                min-height: auto !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+
+            .plan-title {
+                page-break-after: avoid !important;
+                margin-bottom: 15px !important;
+                padding: 12px !important;
+                font-size: 1.5em !important;
+            }
+
+            .flowchart {
+                padding: 10px 0 !important;
+                gap: 8px !important;
+                display: flex !important;
+                flex-direction: column !important;
+            }
+
+            .phase-label {
+                page-break-after: avoid !important;
+                page-break-before: auto !important;
+                page-break-inside: avoid !important;
+                margin: 15px 0 5px 0 !important;
+                padding: 6px 12px !important;
+                font-size: 1em !important;
+            }
+
+            /* Grupo que não pode ser quebrado: forma + seta + próxima forma */
+            .shape {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                page-break-after: avoid !important;
+                page-break-before: avoid !important;
+                min-width: 200px !important;
+                padding: 12px !important;
+                border-width: 2px !important;
+                margin: 2px 0 !important;
+                font-size: 0.9em !important;
+            }
+
+            .shape .process-title {
+                font-size: 1em !important;
+                margin-bottom: 5px !important;
+            }
+
+            .shape .process-details {
+                font-size: 0.8em !important;
+                line-height: 1.3 !important;
+            }
+
+            .shape.diamond {
+                width: 140px !important;
+                height: 140px !important;
+            }
+
+            .shape.diamond .content {
+                font-size: 0.85em !important;
+            }
+
+            .arrow {
+                page-break-before: avoid !important;
+                page-break-after: avoid !important;
+                page-break-inside: avoid !important;
+                margin: 3px 0 !important;
+                border-top-width: 15px !important;
+                border-left-width: 10px !important;
+                border-right-width: 10px !important;
+            }
+
+            .arrow.horizontal {
+                width: 50px !important;
+                height: 2px !important;
+                margin: 0 10px !important;
+            }
+
+            .arrow.horizontal::after {
+                border-left-width: 5px !important;
+            }
+
+            .branch {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                page-break-before: auto !important;
+                page-break-after: avoid !important;
+                margin: 10px 0 !important;
+                gap: 20px !important;
+            }
+
+            .branch-column {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                gap: 12px !important;
+            }
+
+            /* Garantir que grupos de elementos fiquem juntos */
+            .column {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .row {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                margin: 5px 0 !important;
+                gap: 15px !important;
+            }
+
+            .column {
+                gap: 12px !important;
+            }
+            
+            /* Permitir quebra de página ANTES de fase-label se necessário */
+            .phase-label {
+                orphans: 3 !important;
+                widows: 3 !important;
+            }
+            
+            /* Evitar que forma + seta sejam separados - força quebra antes do grupo se necessário */
+            .shape {
+                orphans: 2 !important;
+                widows: 2 !important;
+            }
+            
+            .shape + .arrow {
+                page-break-before: avoid !important;
+                orphans: 2 !important;
+            }
+            
+            .arrow + .shape {
+                page-break-before: avoid !important;
+                orphans: 2 !important;
+                widows: 2 !important;
+            }
+            
+            /* Se houver pouco espaço, quebra antes do conjunto */
+            .shape:has(+ .arrow + .shape) {
+                page-break-after: avoid !important;
+            }
+
+            .deliverables {
+                page-break-before: auto !important;
+                page-break-inside: avoid !important;
+                margin-top: 15px !important;
+                padding: 10px !important;
+                border-width: 2px !important;
+                font-size: 0.85em !important;
+            }
+
+            .deliverables h3 {
+                font-size: 1.1em !important;
+                margin-bottom: 8px !important;
+            }
+
+            .deliverables li {
+                padding: 4px 0 !important;
+                font-size: 0.9em !important;
+            }
+
+            .legend {
+                page-break-before: avoid !important;
+                margin-top: 15px !important;
+                padding: 10px !important;
+                font-size: 0.85em !important;
+            }
+
+            /* Garantir que nada seja cortado */
+            .timeline-item {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .timeline-content {
+                padding: 10px !important;
+            }
+
+            .timeline-title {
+                font-size: 1em !important;
+            }
+
+            .timeline-desc {
+                font-size: 0.85em !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .branch {
+                flex-direction: column;
+            }
+            .row {
+                flex-direction: column;
+            }
+            .shape {
+                min-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="print-instructions">
+            <h3>📄 Instruções para Impressão em PDF</h3>
+            <ul>
+                <li><strong>Páginas por folha:</strong> Selecione "1" (não use "2 pages per sheet")</li>
+                <li><strong>Margens:</strong> Use "Padrão" ou "Mínimo"</li>
+                <li><strong>Grafia de fundo:</strong> Ative esta opção para manter as cores</li>
+                <li><strong>Cabeçalhos e rodapés:</strong> Desative para melhor visualização</li>
+                <li>Cada plano será impresso em páginas separadas automaticamente</li>
+            </ul>
+        </div>
+        <div style="page-break-before: always;">
+            <h1>📊 Fluxogramas de Trabalho por Plano</h1>
+            <p class="subtitle">Processo completo desde a prospecção até a entrega final</p>
+        </div>
+
+        <!-- PLANO BÁSICO -->
+        <div class="plan-section">
+            <div class="plan-title basic">PLANO BÁSICO - R$ 149,90/mês</div>
+            
+            <div class="flowchart">
+                <div class="phase-label">FASE 1: PROSPECÇÃO</div>
+                
+                <div class="shape oval">
+                    <div class="process-title">Início</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Identificação de Lead</div>
+                    <div class="process-details">Busca em redes sociais, indicações</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Primeiro Contato</div>
+                    <div class="process-details">WhatsApp/Instagram ou Visita Presencial</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape diamond">
+                    <div class="content">
+                        <div class="process-title">Lead Qualificado?</div>
+                    </div>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">NÃO</div>
+                            <div class="process-details">Fim do processo</div>
+                        </div>
+                    </div>
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">SIM</div>
+                            <div class="process-details">Próxima fase</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phase-label">FASE 2: APRESENTAÇÃO</div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Agendamento de Reunião</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Apresentação da Empresa</div>
+                    <div class="process-details">Portfólio, cases, diferenciais</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Apresentação do Plano Básico</div>
+                    <div class="process-details">8 posts, 4 dias stories, 1 sessão fotos</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Envio de Proposta Comercial</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape diamond">
+                    <div class="content">
+                        <div class="process-title">Cliente Aceitou?</div>
+                    </div>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">NÃO</div>
+                            <div class="process-details">Follow-up ou fim</div>
+                        </div>
+                    </div>
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">SIM</div>
+                            <div class="process-details">Próxima fase</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phase-label">FASE 3: ONBOARDING</div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Assinatura de Contrato</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Coleta de Informações</div>
+                    <div class="process-details">Questionário: identidade, tom, objetivos</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Recebimento de Acessos</div>
+                    <div class="process-details">Instagram, Facebook (se aplicável)</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Recebimento de Materiais</div>
+                    <div class="process-details">Logo, fotos, informações de produtos</div>
+                </div>
+                <div class="arrow"></div>
+
+                <div class="phase-label">FASE 4: PLANEJAMENTO</div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Análise de Perfil Atual</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Pesquisa de Concorrência</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Criação do Calendário Editorial</div>
+                    <div class="process-details">8 posts distribuídos no mês</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Estratégia de Conteúdo Básica</div>
+                    <div class="process-details">Temas, hashtags, tom de voz</div>
+                </div>
+                <div class="arrow"></div>
+
+                <div class="phase-label">FASE 5: PRODUÇÃO MENSAL</div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Agendamento Sessão de Fotos</div>
+                    <div class="process-details">1x por mês</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Realização da Sessão</div>
+                    <div class="process-details">Captura de produtos/ambiente</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Seleção de Fotos</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Edição Profissional</div>
+                    <div class="process-details">Tratamento, ajustes de cor, retoques</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Criação de Posts</div>
+                    <div class="process-details">8 posts: arte, legenda, hashtags</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Aprovação do Cliente</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape diamond">
+                    <div class="content">
+                        <div class="process-title">Aprovado?</div>
+                    </div>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">NÃO</div>
+                            <div class="process-details">Ajustes solicitados</div>
+                        </div>
+                    </div>
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">SIM</div>
+                            <div class="process-details">Próximo passo</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Publicação de Posts</div>
+                    <div class="process-details">8 posts no mês, melhores horários</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Criação e Publicação de Stories</div>
+                    <div class="process-details">4 dias por semana</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Monitoramento de Engajamento</div>
+                    <div class="process-details">Curtidas, comentários, compartilhamentos</div>
+                </div>
+                <div class="arrow"></div>
+
+                <div class="phase-label">FASE 6: RELATÓRIO E ENCERRAMENTO</div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Coleta de Métricas Mensais</div>
+                    <div class="process-details">Alcance, impressões, engajamento</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Análise de Performance</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Elaboração de Relatório Mensal</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Entrega do Relatório ao Cliente</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Reunião de Feedback</div>
+                    <div class="process-details">Ajustes para próximo mês</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape oval">
+                    <div class="process-title">Fim do Ciclo Mensal</div>
+                    <div class="process-details">Retorna ao planejamento</div>
+                </div>
+
+                <div class="deliverables">
+                    <h3>📦 Entregas do Plano Básico</h3>
+                    <ul>
+                        <li>8 posts profissionais no Instagram</li>
+                        <li>Stories 4 dias por semana</li>
+                        <li>1 sessão de fotos mensal</li>
+                        <li>Edição profissional de todas as imagens</li>
+                        <li>Hashtags otimizadas para cada post</li>
+                        <li>Relatório mensal de performance</li>
+                        <li>Suporte 24/7</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- PLANO PROFISSIONAL -->
+        <div class="plan-section">
+            <div class="plan-title professional">PLANO PROFISSIONAL - R$ 299,90/mês</div>
+            
+            <div class="flowchart">
+                <div class="phase-label">FASE 1: PROSPECÇÃO</div>
+                
+                <div class="shape oval">
+                    <div class="process-title">Início</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Identificação de Lead</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Primeiro Contato</div>
+                    <div class="process-details">WhatsApp/Instagram ou Visita Presencial</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape diamond">
+                    <div class="content">
+                        <div class="process-title">Lead Qualificado?</div>
+                    </div>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">NÃO → Fim</div>
+                        </div>
+                    </div>
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">SIM → Continua</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phase-label">FASE 2: APRESENTAÇÃO</div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Agendamento de Reunião</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Apresentação da Empresa</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Apresentação do Plano Profissional</div>
+                    <div class="process-details">15 posts, 7 dias stories, 2 sessões, site</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Envio de Proposta Comercial</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape diamond">
+                    <div class="content">
+                        <div class="process-title">Cliente Aceitou?</div>
+                    </div>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">NÃO</div>
+                        </div>
+                    </div>
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">SIM</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phase-label">FASE 3: ONBOARDING</div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Assinatura de Contrato</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Coleta de Informações Detalhadas</div>
+                    <div class="process-details">Briefing completo: marca, público, objetivos</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Recebimento de Acessos</div>
+                    <div class="process-details">Instagram, Facebook - Admin completo</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Recebimento de Materiais</div>
+                    <div class="process-details">Logo, fotos, informações, referências</div>
+                </div>
+                <div class="arrow"></div>
+
+                <div class="phase-label">FASE 4: PLANEJAMENTO ESTRATÉGICO</div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Análise Completa de Perfil</div>
+                    <div class="process-details">Engajamento, horários, público</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Pesquisa Avançada de Concorrência</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Calendário Editorial Completo</div>
+                    <div class="process-details">15 posts com estratégia diversificada</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Estratégia de Conteúdo Completa</div>
+                    <div class="process-details">Temas, formatos, tom, hashtags estratégicas</div>
+                </div>
+                <div class="arrow"></div>
+
+                <div class="phase-label">FASE 5: CRIAÇÃO DO SITE</div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Definição de Requisitos do Site</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Design e Desenvolvimento</div>
+                    <div class="process-details">Layout responsivo, identidade visual</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Integração com Redes Sociais</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Testes e Ajustes</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Publicação do Site</div>
+                </div>
+                <div class="arrow"></div>
+
+                <div class="phase-label">FASE 6: PRODUÇÃO MENSAL</div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Agendamento Sessões de Fotos</div>
+                    <div class="process-details">2x por mês</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Realização das Sessões</div>
+                    <div class="process-details">Diferentes temáticas e produtos</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Seleção de Fotos</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Edição Profissional Avançada</div>
+                    <div class="process-details">Identidade visual consistente</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Criação de Posts</div>
+                    <div class="process-details">15 posts: produtos, dicas, depoimentos, promoções</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Aprovação do Cliente</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape diamond">
+                    <div class="content">
+                        <div class="process-title">Aprovado?</div>
+                    </div>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">NÃO → Ajustes</div>
+                        </div>
+                    </div>
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">SIM</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Publicação de Posts</div>
+                    <div class="process-details">15 posts no mês</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Stories Diários</div>
+                    <div class="process-details">7 dias por semana, formatos diversos</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Administração 100% das Mídias</div>
+                    <div class="process-details">Respostas a comentários e engajamento</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Atualizações do Site</div>
+                    <div class="process-details">Conforme necessário</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Monitoramento Contínuo</div>
+                </div>
+                <div class="arrow"></div>
+
+                <div class="phase-label">FASE 7: RELATÓRIO E ENCERRAMENTO</div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Coleta de Métricas Mensais</div>
+                    <div class="process-details">Métricas completas e análise de site</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Análise Comparativa</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Elaboração de Relatório Mensal</div>
+                    <div class="process-details">Detalhado com recomendações</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Entrega do Relatório</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Reunião de Feedback</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape oval">
+                    <div class="process-title">Fim do Ciclo Mensal</div>
+                </div>
+
+                <div class="deliverables">
+                    <h3>📦 Entregas do Plano Profissional</h3>
+                    <ul>
+                        <li>15 posts profissionais no Instagram</li>
+                        <li>Stories 7 dias por semana</li>
+                        <li>2 sessões de fotos mensais</li>
+                        <li>Edição profissional avançada</li>
+                        <li>Administração 100% das redes sociais</li>
+                        <li>Site profissional completo</li>
+                        <li>Estratégia de conteúdo completa</li>
+                        <li>Relatório mensal detalhado</li>
+                        <li>Suporte 24/7</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- PLANO PREMIUM -->
+        <div class="plan-section">
+            <div class="plan-title premium">PLANO PREMIUM - R$ 499,90/mês</div>
+            
+            <div class="flowchart">
+                <div class="phase-label">FASE 1: PROSPECÇÃO</div>
+                
+                <div class="shape oval">
+                    <div class="process-title">Início</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Identificação de Lead</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Primeiro Contato</div>
+                    <div class="process-details">WhatsApp/Instagram ou Visita Presencial</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape diamond">
+                    <div class="content">
+                        <div class="process-title">Lead Qualificado?</div>
+                    </div>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">NÃO → Fim</div>
+                        </div>
+                    </div>
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">SIM → Continua</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phase-label">FASE 2: APRESENTAÇÃO</div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Agendamento de Reunião</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Apresentação Completa da Empresa</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Apresentação do Plano Premium</div>
+                    <div class="process-details">25 posts, 7 dias stories, 4 sessões, site, jingle, campanhas</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Envio de Proposta Comercial</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape diamond">
+                    <div class="content">
+                        <div class="process-title">Cliente Aceitou?</div>
+                    </div>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">NÃO</div>
+                        </div>
+                    </div>
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">SIM</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phase-label">FASE 3: ONBOARDING COMPLETO</div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Assinatura de Contrato</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Briefing Completo e Detalhado</div>
+                    <div class="process-details">Marca, público, objetivos, concorrência, histórico</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Recebimento de Acessos Completos</div>
+                    <div class="process-details">Instagram, Facebook - Admin total</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Recebimento de Todos os Materiais</div>
+                    <div class="process-details">Logo, fotos, informações, referências, identidade</div>
+                </div>
+                <div class="arrow"></div>
+
+                <div class="phase-label">FASE 4: PLANEJAMENTO ESTRATÉGICO AVANÇADO</div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Análise Profunda de Perfil</div>
+                    <div class="process-details">Comportamento, horários, público, engajamento</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Benchmark Avançado</div>
+                    <div class="process-details">Análise detalhada de concorrência e tendências</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Calendário Editorial Premium</div>
+                    <div class="process-details">25 posts com alta frequência e diversidade</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Estratégia Avançada de Conteúdo</div>
+                    <div class="process-details">Conteúdo rico, formatos diversos, storytelling</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Planejamento de Campanhas Pagas</div>
+                </div>
+                <div class="arrow"></div>
+
+                <div class="phase-label">FASE 5: PRODUÇÕES ESPECIAIS</div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Criação do Site Profissional</div>
+                    <div class="process-details">Design premium, responsivo, otimizado</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Criação do Jingle Exclusivo</div>
+                    <div class="process-details">Composição, gravação, edição de áudio</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Entrega das Produções Especiais</div>
+                </div>
+                <div class="arrow"></div>
+
+                <div class="phase-label">FASE 6: PRODUÇÃO MENSAL PREMIUM</div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Agendamento Sessões de Fotos</div>
+                    <div class="process-details">4x por mês</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Realização das Sessões</div>
+                    <div class="process-details">Variedade de produtos, ambientes, temáticas</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Seleção Premium de Fotos</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Edição Profissional Premium</div>
+                    <div class="process-details">Alto nível, identidade visual forte</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Criação de Posts Premium</div>
+                    <div class="process-details">25 posts: alta qualidade, diversidade, storytelling</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Aprovação do Cliente</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape diamond">
+                    <div class="content">
+                        <div class="process-title">Aprovado?</div>
+                    </div>
+                </div>
+                
+                <div class="branch">
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">NÃO → Ajustes</div>
+                        </div>
+                    </div>
+                    <div class="branch-column">
+                        <div class="arrow horizontal"></div>
+                        <div class="shape rectangle">
+                            <div class="process-title">SIM</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Publicação de Posts</div>
+                    <div class="process-details">25 posts no mês</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Stories Premium Diários</div>
+                    <div class="process-details">7 dias, alta qualidade, interatividade</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Administração Premium</div>
+                    <div class="process-details">Respostas imediatas, relacionamento próximo</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Gestão de Campanhas Pagas</div>
+                    <div class="process-details">Criação, segmentação, monitoramento, otimização</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Atualizações Frequentes do Site</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Monitoramento Premium 24/7</div>
+                </div>
+                <div class="arrow"></div>
+
+                <div class="phase-label">FASE 7: RELATÓRIOS E OTIMIZAÇÃO</div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Coleta de Métricas Semanais</div>
+                    <div class="process-details">Análise semanal detalhada</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Coleta de Métricas Mensais</div>
+                    <div class="process-details">Análise completa mensal</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Análise Avançada de Performance</div>
+                    <div class="process-details">Comparações, tendências, insights</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Elaboração de Relatório Semanal</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Elaboração de Relatório Mensal</div>
+                    <div class="process-details">Detalhado com recomendações estratégicas</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Entrega dos Relatórios</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Reuniões de Feedback Semanais</div>
+                    <div class="process-details">Ajustes rápidos e otimizações</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape rectangle">
+                    <div class="process-title">Reunião Mensal Estratégica</div>
+                </div>
+                <div class="arrow"></div>
+                
+                <div class="shape oval">
+                    <div class="process-title">Fim do Ciclo Mensal</div>
+                    <div class="process-details">Retorna com otimizações</div>
+                </div>
+
+                <div class="deliverables">
+                    <h3>📦 Entregas do Plano Premium</h3>
+                    <ul>
+                        <li>25 posts profissionais no Instagram</li>
+                        <li>Stories 7 dias por semana com alta qualidade</li>
+                        <li>4 sessões de fotos mensais</li>
+                        <li>Edição profissional premium</li>
+                        <li>Administração 100% premium das redes sociais</li>
+                        <li>Site profissional completo e atualizado</li>
+                        <li>Jingle exclusivo para propagandas</li>
+                        <li>Gestão de campanhas pagas no Instagram/Facebook</li>
+                        <li>Estratégia completa e avançada de conteúdo</li>
+                        <li>Relatório semanal de performance</li>
+                        <li>Relatório mensal detalhado e estratégico</li>
+                        <li>Reuniões semanais de feedback</li>
+                        <li>Suporte 24/7 premium</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
