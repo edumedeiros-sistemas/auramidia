@@ -177,7 +177,7 @@ document.body.style.opacity = '0';
 document.body.style.transition = 'opacity 0.5s ease';
 
 // WhatsApp integration
-const whatsappNumber = '5543988477636'; // Número do WhatsApp com código do país
+const whatsappNumber = '554391736195'; // Número do WhatsApp com código do país
 const whatsappButtons = document.querySelectorAll('.btn[href="#contact"]');
 whatsappButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {

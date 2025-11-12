@@ -138,7 +138,7 @@ class CSVManager {
                 name: 'Eduardo Medeiros',
                 instagram: '@ensmedeiros',
                 email: 'badcoto@gmail.com',
-                phone: '(43) 98847-7636',
+                phone: '(43) 9 91736195',
                 plan: 'Profissional',
                 status: 'Ativo',
                 created_at: '2025-01-03T10:00:00.000Z',

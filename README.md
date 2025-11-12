@@ -172,7 +172,7 @@ Substitua os placeholders de imagem pelos seus trabalhos reais:
 
 Para dúvidas ou personalizações adicionais, entre em contato:
 - Email: contato@auramidiadigital.com.br
-- WhatsApp: (43) 98847-7636
+- WhatsApp: (43) 9 91736195
 
 ---
 
